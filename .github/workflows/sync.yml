@@ -1,0 +1,24 @@
+name: Sync Fork with Upstream
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每小时运行一次
+  workflow_dispatch:    # 允许手动触发工作流
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 授予 Action 写权限以推送代码
+
+    steps:
+      # 检出 forked 仓库的代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 拉取完整的提交历史以便合并
+
+      # 配置 Git 用户信息
+
+
+      - name: Configure Git
