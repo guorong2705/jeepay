@@ -22,3 +22,26 @@ jobs:
 
 
       - name: Configure Git
+        run: |
+          git config user.name "guorong"
+          git config user.email "guorong2705@foxmail.com"
+
+      # 添加上游仓库
+      - name: Add upstream repository
+        run: |
+          git remote add upstream https://github.com/jeequan/jeepay.git
+          git fetch upstream
+
+      # 合并上游仓库的更改
+      - name: Merge upstream changes
+        run: |
+          git checkout master
+          git merge upstream/master --allow-unrelated-histories
+        continue-on-error: true  # 如果合并冲突，允许继续执行
+
+      # 推送更改到 forked 仓库
+      - name: Push changes
+        run: |
+          git push origin master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
